@@ -9,6 +9,18 @@ public class Geslacht {
         System.out.println("Wat is uw geslacht?");
         String geslacht = userInputScanner.nextLine();
 
+        if(geslacht.equals("m") || geslacht.equals("v")) {
+            if (geslacht.equals("m")) {
+                System.out.println("Dag meneer.");
+            } else {
+                System.out.println("Dag mevrouw.");
+            }
+        } else if(geslacht.equals("M") || geslacht.equals("V")){
+            System.out.println("Dag persoon.");
+        } else {
+            System.out.println("Dag persoon.");
+        }
+
         /*
         Hier boven heeft de gebruiker zijn geslacht ingevoerd. Print met behulp van een beslissingsstructuur (if/else)
         de volgende berichten:

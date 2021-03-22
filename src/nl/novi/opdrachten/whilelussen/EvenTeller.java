@@ -8,5 +8,12 @@ public class EvenTeller {
         Print alleen de even getallen uit!
          */
         int teller = 0;
+        while(teller != 10) {
+            if(teller % 2 == 0) {
+                System.out.println(teller);
+            }
+
+            teller++;
+        }
     }
 }

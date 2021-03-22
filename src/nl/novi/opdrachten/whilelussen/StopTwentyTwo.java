@@ -9,6 +9,11 @@ public class StopTwentyTwo {
     public static void main(String[] tt) {
         int teller = 1;
         while(teller < 100) { // Deze regel mag niet aangepast worden.
+            if(teller == 22) {
+                System.out.println("Getal: " + teller);
+                break;
+            }
+
             System.out.println("Getal: " + teller);
             teller = teller + 1;
         }
