@@ -33,56 +33,86 @@ public class Hoofdletters {
         curstomerNames.add("fredje kadetje");
 
 
-        List<String> customerNames = capitalizeFirstLetter(curstomerNames);
+        List<String> customerNames = capitalizeFirstLetters(curstomerNames);
 
         System.out.println(customerNames);
     }
 
-    public static List<String> capitalizeFirstLetter(List<String> lijst) {
-        for (int counter = 0; counter < lijst.size(); counter++) {
-            String name = lijst.get(counter);
-            String[] choppedFullName = name.split(" ");
-            String[] splitName;
-            boolean checkForDash = false;
-            String firstName;
-            String surnamePrefix = " ";
-            String lastName;
-            String fullName;
+    public static List<String> capitalizeFirstLetters(List<String> lijst) {
+        String[] choppedFullName;
+        String firstName;
+        String surnamePrefix;
+        String lastName;
+        String fullName;
+        String finalLastName;
 
+        for (int i = 0; i < lijst.size(); i++) {
+            String name = lijst.get(i);
 
+            // Breaks up each list item into different words and puts them into an array.
+            choppedFullName = name.split(" ");
+
+            // First name is always element 0.
             firstName = choppedFullName[0];
+
+            // Last name is always the last element of the string.
             lastName = choppedFullName[choppedFullName.length - 1];
 
-            if (choppedFullName.length > 2) // Checks if a name has more than 3 words
-            {
-                for (int i = 1; i < (choppedFullName.length - 1) ; i++) {
-                    surnamePrefix += choppedFullName[i] + " ";
-                }
-            }
-
-            for (int i = 0; i < lastName.length(); i++) {
-                if (lastName.charAt(i) == '-') {
-                    checkForDash = true;
-                    break;
-                }
-            }
-
+            // First name is capitalized
             firstName = Character.toUpperCase(firstName.charAt(0)) + firstName.substring(1);
-            if (checkForDash) {
-                splitName = lastName.split("-");
-                String namePart1 = splitName[0];
-                String namePart2 = splitName[1];
-                namePart1 = Character.toUpperCase(namePart1.charAt(0)) + namePart1.substring(1);
-                namePart2 = "-" + Character.toUpperCase(namePart2.charAt(0)) + namePart2.substring(1);
-                lastName = namePart1 + namePart2;
 
-            } else {
-                lastName = Character.toUpperCase(lastName.charAt(0)) + lastName.substring(1);
-            }
-            fullName = firstName + surnamePrefix + lastName;
+            // This checks if there are any prefixes before the last name.
+            surnamePrefix = fillSurnamePrefix(choppedFullName);
+
+            // Capitalizes lastname. If last name has a dash the the next character is also capitalized.
+            finalLastName = capitalizeNames(lastName);
+
+            // Adds all parts into one String.
+            fullName = firstName + surnamePrefix + finalLastName;
+
+            // Replaces original name String with capitalized String in list
             lijst.set(lijst.indexOf(name), fullName);
         }
-
         return lijst;
+    }
+
+    private static String capitalizeNames(String last) {
+        String[] splitName;
+
+        if (checkForDash(last)) {
+            splitName = last.split("-");
+            String namePart1 = splitName[0];
+            String namePart2 = splitName[1];
+            namePart1 = Character.toUpperCase(namePart1.charAt(0)) + namePart1.substring(1);
+            namePart2 = "-" + Character.toUpperCase(namePart2.charAt(0)) + namePart2.substring(1);
+            last = namePart1 + namePart2;
+        } else {
+            last = Character.toUpperCase(last.charAt(0)) + last.substring(1);
+        }
+        return last;
+    }
+
+    private static String fillSurnamePrefix(String[] choppedFullName) {
+        String prefix = " ";
+
+        if (choppedFullName.length > 2) // Checks if a name has more than 3 words
+        {
+            for (int i = 1; i < (choppedFullName.length - 1); i++) {
+                prefix += choppedFullName[i] + " ";
+            }
+        }
+        return prefix;
+    }
+
+    private static boolean checkForDash(String name) {
+        boolean dash = false;
+
+        for (int i = 0; i < name.length(); i++) {
+            if (name.charAt(i) == '-') {
+                dash = true;
+                break;
+            }
+        }
+        return dash;
     }
 }
